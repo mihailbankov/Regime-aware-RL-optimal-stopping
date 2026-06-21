@@ -1,0 +1,22 @@
+name: arhmm
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.11
+  - pip
+  - matplotlib>=3.8
+  - seaborn>=0.13
+  - pip:
+      # ── Pinned compatible trio ─────────────────────────────────────────────
+      # dynamax 1.0.x internally imports tensorflow-probability even in core.
+      # TFP uses jax.core.pytype_aval_mappings which was removed in JAX 0.4.14.
+      # These three versions are the last set known to work together on Windows.
+      - "jax[cpu]==0.4.13"
+      - "dynamax==0.1.4"
+      - "tensorflow-probability==0.23.0"
+
+      # ── Remaining deps ─────────────────────────────────────────────────────
+      - "optax==0.1.7"           # must match the jax 0.4.x era
+      - "scikit-learn>=1.3"      # for kmeans initialisation
+      - "yfinance>=0.2.40"

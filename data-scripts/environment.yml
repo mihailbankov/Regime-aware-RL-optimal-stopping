@@ -1,0 +1,26 @@
+name: arbitragelab_env
+
+channels:
+  - conda-forge
+  - defaults
+
+dependencies:
+  # Python 3.8 is required by arbitragelab
+  - python=3.8
+
+  # Install pyvinecopulib via conda-forge BEFORE pip runs,
+  # because it fails to compile from source on Windows
+  - pyvinecopulib
+
+  # pip is needed to install arbitragelab itself
+  - pip
+
+  - pip:
+    # multitasking 0.0.10+ uses type[X] syntax requiring Python 3.9+.
+    # Must be pinned BEFORE yfinance/arbitragelab to win the resolution.
+    - multitasking==0.0.9
+
+    # arbitragelab 0.9.1 pins yfinance==0.2.24 exactly.
+    # arbitragelab 1.0.0 requires tensorflow-io-gcs-filesystem which conflicts,
+    # so we use 0.9.1 which has all the same core modules.
+    - arbitragelab==0.9.1
